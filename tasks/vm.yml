@@ -1,23 +1,37 @@
 ---
 
+# copy kvm-guest.ks to /var/tmp/
+#
 # define and launch the guest
-- name: define vm
-  community.libvirt.virt:
-    command: define
-    xml: "{{ lookup('file', 'vm-myfirstvm.xml') }}"
 
-- name: start vm
-  community.libvirt.virt:
-    name: myfirstvm
-    state: running
+- name: create
+  command:
+    cmd: >
+      virt-install 
+      --name="kvm-guest" 
+      --vcpus=2 
+      --ram=4096 
+      --disk path=/var/lib/libvirt/images/kvm-guest.qcow2,bus=virtio,size=50 
+      --os-variant rhel8.2 
+      --network network=default,mac=52:54:00:00:00:21   
+      --boot uefi,hd,menu=on 
+      --location /var/lib/libvirt/images/rhel-8.2-x86_64-dvd.iso 
+      --initrd-inject /var/tmp/kvm-guest.ks 
+      --extra-args "inst.ks=file:/kvm-guest.ks console=tty0 console=ttyS0,115200" 
+      --noautoconsole
+  register: r_virt_install
+
+- name: display domain info
+  debug:
+    var: r_virt_install
 
 - name: get domain info
   community.libvirt.virt:
-    name: myfirstvm
+    name: kvm-guest
     command: info
   register: r_domain_info
 
 - name: display domain info
   debug:
-    var: r_domain_info['myfirstvm']
+    var: r_domain_info['kvm-guest']
 
