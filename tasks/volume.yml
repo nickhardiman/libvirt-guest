@@ -1,0 +1,30 @@
+---
+# copy a KVM image, a golden image
+# This role expects these two files to already exist. 
+# rhel-8.2-x86_64-kvm.qcow2 - storage volume file downloaded from Red Hat
+# kvm-guest.xml - configuration for the virtual machine
+#
+# The role creates these resources.
+# kvm-guest - a libvirt domain
+# kvm-guest.qcow2 - a copy of the rhel file
+#
+- name: copy the downloaded KVM image file
+  ansible.builtin.copy:
+    src: /var/lib/libvirt/images/rhel-8.2-x86_64-kvm.qcow2
+    dest: /var/lib/libvirt/images/kvm-guest.qcow2
+
+- name: update pool catalog
+  community.libvirt.virt_pool:
+    name: images
+    command: refresh
+
+# return code is 1 if the volume is missing
+- name: check
+  ansible.builtin.command: 
+    cmd: virsh vol-info kvm-guest.qcow2 images
+  register: r_vol_info
+
+- name: display 
+  debug:
+    var: r_vol_info['stdout_lines']
+

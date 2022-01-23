@@ -1,0 +1,3 @@
+---
+# tasks file for kvm-guest
+- include_tasks: vm.yml

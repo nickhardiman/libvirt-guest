@@ -1,0 +1,23 @@
+---
+
+# define and launch the guest
+- name: define vm
+  community.libvirt.virt:
+    command: define
+    xml: "{{ lookup('file', 'vm-myfirstvm.xml') }}"
+
+- name: start vm
+  community.libvirt.virt:
+    name: myfirstvm
+    state: running
+
+- name: get domain info
+  community.libvirt.virt:
+    name: myfirstvm
+    command: info
+  register: r_domain_info
+
+- name: display domain info
+  debug:
+    var: r_domain_info['myfirstvm']
+
