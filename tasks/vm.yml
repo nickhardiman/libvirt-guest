@@ -2,16 +2,26 @@
 
 # copy kvm-guest.ks to /var/tmp/
 #
+- name: Template the kickstart file to /var/tmp/
+  ansible.builtin.template:
+    src: kvm-guest.ks.j2
+    dest: /var/tmp/kvm-guest.ks
+    owner: root
+    group: root
+    mode: '0600'
+
 # define and launch the guest
 
+# sparse?
+#      --disk path=/var/lib/libvirt/images/kvm-guest.qcow2,bus=virtio,size=50,sparse=yes
 - name: create
-  command:
+  ansible.builtin.command:
     cmd: >
       virt-install 
       --name="kvm-guest" 
       --vcpus=2 
       --ram=4096 
-      --disk path=/var/lib/libvirt/images/kvm-guest.qcow2,bus=virtio,size=50 
+      --disk path=/var/lib/libvirt/images/kvm-guest.qcow2,bus=virtio,size=50,sparse=yes 
       --os-variant rhel8.2 
       --network network=default,mac=52:54:00:00:00:21   
       --boot uefi,hd,menu=on 
@@ -22,7 +32,7 @@
   register: r_virt_install
 
 - name: display domain info
-  debug:
+  ansible.builtin.debug:
     var: r_virt_install
 
 - name: get domain info
