@@ -13,7 +13,9 @@
 # define and launch the guest
 
 # sparse?
-#      --disk path=/var/lib/libvirt/images/kvm-guest.qcow2,bus=virtio,size=50,sparse=yes
+# Not sparse!
+# I've done something wrong here, or in the kickstart file.
+# 
 - name: create
   ansible.builtin.command:
     cmd: >

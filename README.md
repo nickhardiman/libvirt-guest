@@ -1,31 +1,54 @@
+Create a virtual machine using libvirt. 
+This installs RHEL 8.2 using a kickstart file. 
+Simple role with hardcoded values. 
+
+The role creates these resources.
+
+* kvm-guest - a libvirt domain
+* kvm-guest.qcow2 - a 50GB root disk
+
+
 Role Name
 =========
 
-A brief description of the role goes here.
+kvm-guest
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+libvirt environment installed and running. 
+
+Installer ISO file /var/lib/libvirt/images/rhel-8.2-x86_64-dvd.iso. This is hardcoded in tasks/vm.yml. 
+
+50GB free storage. 
+
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+RHSM Red Hat Subscription Manager account
+
+* subscription_name
+* subscription_password
+* subscription_pool
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+community.libvirt collection
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```
+mkdir -p ~/ansible/roles
+cd ~/ansible/roles
+git clone https:/github.com/nickhardiman/virtualization-host.git
+sudo ansible-playbook kvm-guest/tests/test.yml \
+	--extra-var="subscription_name=my_user"  \
+	--extra-var='subscription_password=my_password'  \
+	--extra-var="subscription_pool=my_pool_id"
+```
 
 License
 -------
@@ -35,4 +58,5 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Nick Hardiman
+
