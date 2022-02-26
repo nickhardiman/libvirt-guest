@@ -1,0 +1,27 @@
+---
+# clean up
+- hosts: localhost
+  remote_user: root
+  tasks:  
+
+  # https://github.com/ansible-collections/community.libvirt/issues/40
+  - name: remove NVRAM file
+    file:
+      name: /var/lib/libvirt/qemu/nvram/kvm-guest_VARS.fd
+      state: absent
+
+  - name: pull the plug
+    community.libvirt.virt:
+      name: kvm-guest
+      state: destroyed
+  
+  - name: delete libvirt's domain
+    community.libvirt.virt:
+      name: kvm-guest
+      command: undefine
+  
+  #https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/virtualization_deployment_and_administration_guide/sect-storage_volume_commands-deleting_storage_volumes
+  - name: delete libvirt's volume
+    ansible.builtin.command: 
+      cmd: virsh vol-delete kvm-guest.qcow2 images
+  
