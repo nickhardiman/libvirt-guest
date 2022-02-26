@@ -1,4 +1,4 @@
-kvm-guest, an Ansible role
+libvirt-guest, an Ansible role
 =========
 
 Create a virtual machine named "kvm-guest" using libvirt. 
@@ -24,7 +24,7 @@ Login
 Requirements
 ------------
 
-The libvirt environment installed and running. 
+The libvirt environment installed and running (see https://github.com/nickhardiman/libvirt-host).
 
 Installer ISO file _/var/lib/libvirt/images/rhel-8.2-x86_64-dvd.iso_. Download this from https://access.redhat.com/downloads/. Sign up for free at https://developers.redhat.com/ to get access.
 
@@ -45,8 +45,8 @@ Dependencies
 
 community.libvirt (https://github.com/ansible-collections/community.libvirt)
 
-Example Playbook
-----------------
+Example
+-------
 
 Create the VM. 
 
