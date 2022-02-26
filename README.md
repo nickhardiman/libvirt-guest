@@ -2,11 +2,13 @@ kvm-guest, an Ansible role
 =========
 
 Create a virtual machine named "kvm-guest" using libvirt. 
+
 The role uses a kickstart file to install RHEL 8.2, register with RHSM, update then power off (the VM should reboot, but a QEMU option prevents that).
 This role is simple, with hardcoded values in both the tasks and kickstart file _templates/kvm-guest.ks.j2_. 
-I made this role to learn more about the libvirt collection.
+I made this role to learn more about the libvirt collection so don't expect polish.
 
-The role creates these resources.
+The role creates these resources. 
+Playbook _tests/no-kvm-guest.yml_ deletes them. 
 
 * kvm-guest - a libvirt domain
 * kvm-guest.qcow2 - a 50GB root disk
@@ -18,7 +20,6 @@ Login
 * user: nick
 * password: Password;1
 
-Playbook _tests/no-kvm-guest.yml_ deletes these. 
 
 Requirements
 ------------
@@ -42,7 +43,7 @@ RHSM Red Hat Subscription Manager account. The kickstart file signs up with thes
 Dependencies
 ------------
 
-community.libvirt collection
+community.libvirt (https://github.com/ansible-collections/community.libvirt)
 
 Example Playbook
 ----------------
