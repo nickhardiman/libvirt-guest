@@ -62,7 +62,7 @@ sudo ansible-playbook kvm-guest/tests/test.yml \
 Remove the VM.
 
 ```
-sudo ansible-playbook kvm-guest/tests/test.yml \
+sudo ansible-playbook kvm-guest/tests/no-kvm-guest.yml
 ```
 
 License
