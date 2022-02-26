@@ -67,7 +67,7 @@ pwpolicy luks --minlen=6 --minquality=1 --notstrict --nochanges --notempty
 %end
 
 %post --log=/root/ks-post.log
-/usr/sbin/subscription-manager register --username={{ subscription_name }} --password={{ subscription_password }}
+/usr/sbin/subscription-manager register --username={{ subscription_name }} --password='{{ subscription_password }}'
 /usr/sbin/subscription-manager attach --pool={{ subscription_pool }}
 /usr/sbin/subscription-manager release --set=8.2
 /usr/bin/dnf -y update
