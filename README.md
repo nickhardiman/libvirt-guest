@@ -53,8 +53,8 @@ Create the VM.
 ```
 mkdir -p ~/ansible/roles
 cd ~/ansible/roles
-git clone https:/github.com/nickhardiman/virtualization-host.git
-sudo ansible-playbook kvm-guest/tests/test.yml \
+git clone https:/github.com/nickhardiman/libvirt-guest.git
+sudo ansible-playbook libvirt-guest/tests/test.yml \
 	--extra-var="subscription_name=my_user"  \
 	--extra-var='subscription_password=my_password'  \
 	--extra-var="subscription_pool=my_pool_id"
@@ -63,7 +63,7 @@ sudo ansible-playbook kvm-guest/tests/test.yml \
 Remove the VM.
 
 ```
-sudo ansible-playbook kvm-guest/tests/no-kvm-guest.yml
+sudo ansible-playbook libvirt-guest/tests/no-kvm-guest.yml
 ```
 
 License
